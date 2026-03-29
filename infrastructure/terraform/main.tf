@@ -48,17 +48,6 @@ variable "app_name" {
   default     = "livecenter"
 }
 
-variable "github_repository" {
-  description = "GitHub repository URL"
-  type        = string
-}
-
-variable "github_token" {
-  description = "GitHub personal access token"
-  type        = string
-  sensitive   = true
-}
-
 variable "domain_name" {
   description = "Custom domain name"
   type        = string
@@ -85,18 +74,4 @@ variable "amplify_domain" {
   description = "Amplify default domain"
   type        = string
   default     = "dl5iyvnws81xx.amplifyapp.com"
-}
-
-# Social Login Variables
-variable "google_client_id" {
-  description = "Google OAuth Client ID"
-  type        = string
-  default     = ""
-}
-
-variable "google_client_secret" {
-  description = "Google OAuth Client Secret"
-  type        = string
-  sensitive   = true
-  default     = ""
 }
