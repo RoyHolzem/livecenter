@@ -87,72 +87,7 @@ resource "random_string" "domain" {
   upper   = false
 }
 
-# App Client
-resource "aws_cognito_user_pool_client" "livecenter_web" {
-  name                                 = "livecenter-web-${var.environment}"
-  user_pool_id                         = aws_cognito_user_pool.livecenter.id
-  generate_secret                      = false
-  refresh_token_validity              = 30
-  access_token_validity               = 1
-  id_token_validity                   = 1
-  token_validity_units {
-    access_token  = "hours"
-    id_token      = "hours"
-    refresh_token = "days"
-  }
-  
-  # Explicit auth flows
-  explicit_auth_flows = [
-    "ALLOW_USER_PASSWORD_AUTH",
-    "ALLOW_REFRESH_TOKEN_AUTH",
-    "ALLOW_USER_SRP_AUTH"
-  ]
-  
-  # Supported identity providers
-  supported_identity_providers = ["COGNITO"]
-  
-  # OAuth configuration
-  callback_urls = [
-    "https://${var.domain_name != "" ? var.domain_name : "main.${var.amplify_domain}"}",
-    "http://localhost:3000"
-  ]
-  
-  logout_urls = [
-    "https://${var.domain_name != "" ? var.domain_name : "main.${var.amplify_domain}"}",
-    "http://localhost:3000"
-  ]
-  
-  default_redirect_uri = "https://${var.domain_name != "" ? var.domain_name : "main.${var.amplify_domain}"}"
-  
-  allowed_oauth_flows = [
-    "code",
-    "implicit"
-  ]
-  
-  allowed_oauth_scopes = [
-    "email",
-    "openid",
-    "profile"
-  ]
-  
-  allowed_oauth_flows_user_pool_client = true
-  
-  # Read/write attributes
-  read_attributes = [
-    "email",
-    "email_verified",
-    "custom:role",
-    "custom:team"
-  ]
-  
-  write_attributes = [
-    "email",
-    "custom:role",
-    "custom:team"
-  ]
-  
-  prevent_user_existence_errors = "ENABLED"
-}
+# User Pool Client is defined in google-provider.tf with Google social login support
 
 # Identity Pool (optional - for AWS resource access)
 resource "aws_cognito_identity_pool" "livecenter" {
