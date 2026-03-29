@@ -37,3 +37,8 @@ npm-debug.log*
 *.bak
 *.tmp
 terraform.tfvars
+
+# Local secrets
+terraform.tfvars.local
+infrastructure/terraform/terraform.tfvars
+*.tfplan
