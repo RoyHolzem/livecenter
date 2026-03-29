@@ -123,6 +123,12 @@ export default function Dashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
+          {/* Metrics Header */}
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-white mb-2">Metrics</h2>
+            <p className="text-sm text-gray-400">Real-time key performance indicators</p>
+          </div>
+
           {/* KPI Cards */}
           <section className="mb-8">
             <KPICards kpis={kpis} />
