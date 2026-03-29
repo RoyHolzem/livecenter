@@ -1,14 +1,18 @@
-# Terraform Variables Configuration
-# Copy this to terraform.tfvars and fill in your values
-
 aws_region       = "eu-central-1"
 environment      = "production"
 app_name         = "livecenter"
-github_repository = "https://github.com/RoyHolzem/livecenter"
 
-# Get your GitHub token from: https://github.com/settings/tokens
-# Required scopes: repo
-github_token = "ghp_YOUR_GITHUB_TOKEN_HERE"
+# Existing Amplify app (already deployed)
+amplify_app_id   = "dl5iyvnws81xx"
+amplify_domain   = "dl5iyvnws81xx.amplifyapp.com"
 
-# Optional: Custom domain (leave empty to use Amplify default domain)
+# Optional: Custom domain (leave empty to use Amplify default)
 domain_name = ""
+
+# Google OAuth (get from https://console.cloud.google.com/)
+# See GOOGLE_OAUTH_SETUP.md for instructions
+google_client_id     = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+google_client_secret = "YOUR_GOOGLE_CLIENT_SECRET"
+
+# Note: After first terraform apply, update Google OAuth redirect URIs
+# with the actual Cognito domain from: terraform output cognito_domain
