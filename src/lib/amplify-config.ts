@@ -9,8 +9,8 @@ Amplify.configure({
     oauth: {
       domain: process.env.NEXT_PUBLIC_COGNITO_DOMAIN || 'livecenter-production-6p4sdh.auth.eu-central-1.amazoncognito.com',
       scope: ['email', 'openid', 'profile'],
-      redirectSignIn: typeof window !== 'undefined' ? `${window.location.origin}/` : '/',
-      redirectSignOut: typeof window !== 'undefined' ? `${window.location.origin}/` : '/',
+      redirectSignIn: typeof window !== 'undefined' ? window.location.origin : '/',
+      redirectSignOut: typeof window !== 'undefined' ? window.location.origin : '/',
       responseType: 'code'
     }
   }
