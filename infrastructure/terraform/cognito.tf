@@ -113,16 +113,16 @@ resource "aws_cognito_user_pool_client" "livecenter_web" {
   
   # OAuth configuration
   callback_urls = [
-    "https://${var.domain_name != "" ? var.domain_name : "${aws_amplify_branch.main.branch_name}.${aws_amplify_app.livecenter.default_domain}"}",
+    "https://${var.domain_name != "" ? var.domain_name : "main.${var.amplify_domain}"}",
     "http://localhost:3000"
   ]
   
   logout_urls = [
-    "https://${var.domain_name != "" ? var.domain_name : "${aws_amplify_branch.main.branch_name}.${aws_amplify_app.livecenter.default_domain}"}",
+    "https://${var.domain_name != "" ? var.domain_name : "main.${var.amplify_domain}"}",
     "http://localhost:3000"
   ]
   
-  default_redirect_uri = "https://${var.domain_name != "" ? var.domain_name : "${aws_amplify_branch.main.branch_name}.${aws_amplify_app.livecenter.default_domain}"}"
+  default_redirect_uri = "https://${var.domain_name != "" ? var.domain_name : "main.${var.amplify_domain}"}"
   
   allowed_oauth_flows = [
     "code",
@@ -254,5 +254,5 @@ output "cognito_domain" {
 }
 
 output "cognito_login_url" {
-  value = "https://${aws_cognito_user_pool_domain.livecenter.domain}.auth.${var.aws_region}.amazoncognito.com/login?response_type=code&client_id=${aws_cognito_user_pool_client.livecenter_web.id}&redirect_uri=https://${var.domain_name != "" ? var.domain_name : "${aws_amplify_branch.main.branch_name}.${aws_amplify_app.livecenter.default_domain}"}"
+  value = "https://${aws_cognito_user_pool_domain.livecenter.domain}.auth.${var.aws_region}.amazoncognito.com/login?response_type=code&client_id=${aws_cognito_user_pool_client.livecenter_web.id}&redirect_uri=https://${var.domain_name != "" ? var.domain_name : "main.${var.amplify_domain}"}"
 }
