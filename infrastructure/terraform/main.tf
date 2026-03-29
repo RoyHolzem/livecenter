@@ -104,8 +104,12 @@ resource "aws_amplify_app" "livecenter" {
   
   # Environment variables
   environment_variables = {
-    ENV                     = var.environment
-    NEXT_PUBLIC_ENVIRONMENT = var.environment
+    ENV                             = var.environment
+    NEXT_PUBLIC_ENVIRONMENT         = var.environment
+    NEXT_PUBLIC_COGNITO_REGION      = var.aws_region
+    NEXT_PUBLIC_COGNITO_USER_POOL_ID = aws_cognito_user_pool.livecenter.id
+    NEXT_PUBLIC_COGNITO_CLIENT_ID    = aws_cognito_user_pool_client.livecenter_web.id
+    NEXT_PUBLIC_COGNITO_IDENTITY_POOL_ID = aws_cognito_identity_pool.livecenter.id
   }
   
   # Enable auto build

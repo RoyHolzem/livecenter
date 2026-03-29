@@ -1,0 +1,14 @@
+# Terraform Variables Configuration
+# Copy this to terraform.tfvars and fill in your values
+
+aws_region       = "eu-central-1"
+environment      = "production"
+app_name         = "livecenter"
+github_repository = "https://github.com/RoyHolzem/livecenter"
+
+# Get your GitHub token from: https://github.com/settings/tokens
+# Required scopes: repo
+github_token = "ghp_YOUR_GITHUB_TOKEN_HERE"
+
+# Optional: Custom domain (leave empty to use Amplify default domain)
+domain_name = ""
