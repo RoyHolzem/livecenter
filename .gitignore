@@ -1,1 +1,38 @@
-.terraform
+# Dependencies
+node_modules/
+package-lock.json
+
+# Next.js
+.next/
+out/
+build/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+.terraform.lock.hcl
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Misc
+*.bak
+*.tmp
