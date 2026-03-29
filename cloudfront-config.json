@@ -1,0 +1,38 @@
+{
+  "CallerReference": "livecenter-$(date +%s)",
+  "Comment": "LiveCenter Dashboard",
+  "Enabled": true,
+  "PriceClass": "PriceClass_100",
+  "Origins": {
+    "Quantity": 1,
+    "Items": [
+      {
+        "Id": "S3-livecenter-dashboard",
+        "DomainName": "livecenter-dashboard-1774809213.s3-website.eu-central-1.amazonaws.com",
+        "CustomOriginConfig": {
+          "HTTPPort": 80,
+          "HTTPSPort": 443,
+          "OriginProtocolPolicy": "http-only",
+          "OriginSslProtocols": {
+            "Quantity": 2,
+            "Items": ["TLSv1.2", "TLSv1.1"]
+          }
+        }
+      }
+    ]
+  },
+  "DefaultCacheBehavior": {
+    "TargetOriginId": "S3-livecenter-dashboard",
+    "ViewerProtocolPolicy": "redirect-to-https",
+    "MinTTL": 0,
+    "DefaultTTL": 3600,
+    "MaxTTL": 86400,
+    "ForwardedValues": {
+      "QueryString": false,
+      "Cookies": {
+        "Forward": "none"
+      }
+    }
+  },
+  "DefaultRootObject": "index.html"
+}
