@@ -1,3 +1,24 @@
+# Variables for Google OAuth
+variable "google_client_id" {
+  description = "Google OAuth Client ID"
+  type        = string
+  default     = ""
+}
+
+variable "google_client_secret" {
+  description = "Google OAuth Client Secret"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
+locals {
+  identity_providers = compact([
+    "COGNITO",
+    var.google_client_id != "" ? "Google" : "",
+  ])
+}
+
 # Google Identity Provider for Cognito
 
 resource "aws_cognito_identity_provider" "google" {
@@ -5,7 +26,6 @@ resource "aws_cognito_identity_provider" "google" {
   provider_name = "Google"
   provider_type = "Google"
   
-  # These will be provided via terraform.tfvars
   provider_details = {
     client_id        = var.google_client_id
     client_secret    = var.google_client_secret
@@ -22,6 +42,8 @@ resource "aws_cognito_identity_provider" "google" {
     family_name    = "family_name"
     picture        = "picture"
   }
+  
+  count = var.google_client_id != "" ? 1 : 0
 }
 
 # Add Google to supported identity providers
@@ -46,11 +68,8 @@ resource "aws_cognito_user_pool_client" "livecenter_web" {
     "ALLOW_USER_SRP_AUTH"
   ]
   
-  # Supported identity providers - NOW INCLUDES GOOGLE
-  supported_identity_providers = [
-    "COGNITO",
-    "Google"
-  ]
+  # Supported identity providers - DYNAMIC BASED ON CONFIGURATION
+  supported_identity_providers = local.identity_providers
   
   # OAuth configuration
   callback_urls = [
@@ -93,20 +112,6 @@ resource "aws_cognito_user_pool_client" "livecenter_web" {
   ]
   
   prevent_user_existence_errors = "ENABLED"
-}
-
-# Variables for Google OAuth
-variable "google_client_id" {
-  description = "Google OAuth Client ID"
-  type        = string
-  default     = ""
-}
-
-variable "google_client_secret" {
-  description = "Google OAuth Client Secret"
-  type        = string
-  sensitive   = true
-  default     = ""
 }
 
 # Output Google login URL
