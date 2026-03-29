@@ -1,3 +1,5 @@
+# LiveCenter Authentication Configuration
+
 aws_region       = "eu-central-1"
 environment      = "production"
 app_name         = "livecenter"
@@ -9,10 +11,51 @@ amplify_domain   = "dl5iyvnws81xx.amplifyapp.com"
 # Optional: Custom domain (leave empty to use Amplify default)
 domain_name = ""
 
-# Google OAuth (get from https://console.cloud.google.com/)
-# See GOOGLE_OAUTH_SETUP.md for instructions
+# =============================================================================
+# SOCIAL LOGIN PROVIDERS
+# =============================================================================
+
+# GOOGLE (Recommended - Easiest setup)
+# Get credentials: https://console.cloud.google.com/apis/credentials
 google_client_id     = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
 google_client_secret = "YOUR_GOOGLE_CLIENT_SECRET"
 
-# Note: After first terraform apply, update Google OAuth redirect URIs
-# with the actual Cognito domain from: terraform output cognito_domain
+# FACEBOOK (Optional)
+# Get credentials: https://developers.facebook.com/apps/
+# facebook_app_id     = "YOUR_FACEBOOK_APP_ID"
+# facebook_app_secret = "YOUR_FACEBOOK_APP_SECRET"
+
+# AMAZON (Optional)
+# Get credentials: https://developer.amazon.com/loginwithamazon/console/setup/lwa.html
+# amazon_client_id     = "YOUR_AMAZON_CLIENT_ID"
+# amazon_client_secret = "YOUR_AMAZON_CLIENT_SECRET"
+
+# APPLE (Optional - Required for iOS apps)
+# Get credentials: https://developer.apple.com/account/resources/identifiers/list
+# apple_services_id  = "YOUR_SERVICES_ID"
+# apple_team_id      = "YOUR_TEAM_ID"
+# apple_key_id       = "YOUR_KEY_ID"
+# apple_private_key  = "YOUR_PRIVATE_KEY"
+
+# =============================================================================
+# ADVANCED PROVIDERS (Require custom OIDC setup)
+# =============================================================================
+
+# GITHUB (Optional - Requires custom OIDC or Auth0)
+# Get credentials: https://github.com/settings/developers
+# github_oauth_client_id     = "YOUR_GITHUB_CLIENT_ID"
+# github_oauth_client_secret = "YOUR_GITHUB_CLIENT_SECRET"
+
+# DISCORD (Optional - Requires custom OIDC or Auth0)
+# Get credentials: https://discord.com/developers/applications
+# discord_oauth_client_id     = "YOUR_DISCORD_CLIENT_ID"
+# discord_oauth_client_secret = "YOUR_DISCORD_CLIENT_SECRET"
+
+# =============================================================================
+# NOTES
+# =============================================================================
+# 1. At minimum, enable Google login for best UX
+# 2. Email/password is always available
+# 3. Never commit this file with real secrets to git
+# 4. For production, use AWS Secrets Manager
+# 5. See SOCIAL_LOGIN_GUIDE.md for detailed setup instructions
