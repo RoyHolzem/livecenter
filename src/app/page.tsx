@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { Authenticator } from '@aws-amplify/ui-react'
+import '@aws-amplify/ui-react/styles.css'
 import { 
   Phone, Mail, Ticket, Users, Activity, TrendingUp, Clock, AlertCircle 
 } from 'lucide-react'
@@ -17,8 +19,9 @@ import AgentGrid from '../components/dashboard/AgentGrid'
 import ActivityFeed from '../components/dashboard/ActivityFeed'
 import Charts from '../components/dashboard/Charts'
 import QueueStatus from '../components/dashboard/QueueStatus'
+import '../lib/amplify-config'
 
-export default function Dashboard() {
+function Dashboard() {
   const [agents, setAgents] = useState<Agent[]>([])
   const [queues, setQueues] = useState<Queue[]>([])
   const [kpis, setKpis] = useState<KPIMetrics | null>(null)
@@ -82,39 +85,56 @@ export default function Dashboard() {
   }
 
   return (
-    <div className={`min-h-screen ${isWallboard ? 'wallboard-mode' : ''}`}>
-      {/* Header */}
-      <header className="bg-black/50 backdrop-blur-lg border-b border-white/10 sticky top-0 z-50">
-        <div className="max-w-[1920px] mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
-              <Activity className="w-6 h-6 text-white" />
+    <Authenticator
+      socialProviders={['google']}
+      loginMechanisms={['email']}
+    >
+      {({ signOut, user }) => (
+        <div className={`min-h-screen ${isWallboard ? 'wallboard-mode' : ''}`}>
+          {/* Header */}
+          <header className="bg-black/50 backdrop-blur-lg border-b border-white/10 sticky top-0 z-50">
+            <div className="max-w-[1920px] mx-auto px-6 py-4 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
+                  <Activity className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold">LiveCenter</h1>
+                  <p className="text-xs text-gray-400">Operations Command Center</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="text-gray-400">
+                    {user?.attributes?.email || 'User'}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                    <span className="text-sm text-gray-400">LIVE</span>
+                  </div>
+                </div>
+                
+                <button
+                  onClick={() => setIsWallboard(!isWallboard)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    isWallboard 
+                      ? 'bg-purple-600 text-white' 
+                      : 'bg-white/10 text-gray-300 hover:bg-white/20'
+                  }`}
+                >
+                  {isWallboard ? 'Exit Wallboard' : 'Wallboard Mode'}
+                </button>
+                
+                <button
+                  onClick={signOut}
+                  className="px-4 py-2 rounded-lg text-sm font-medium bg-red-600/20 text-red-400 hover:bg-red-600/30 transition-colors"
+                >
+                  Sign Out
+                </button>
+              </div>
             </div>
-            <div>
-              <h1 className="text-xl font-bold">LiveCenter</h1>
-              <p className="text-xs text-gray-400">Operations Command Center</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span className="text-sm text-gray-400">LIVE</span>
-            </div>
-            
-            <button
-              onClick={() => setIsWallboard(!isWallboard)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                isWallboard 
-                  ? 'bg-purple-600 text-white' 
-                  : 'bg-white/10 text-gray-300 hover:bg-white/20'
-              }`}
-            >
-              {isWallboard ? 'Exit Wallboard' : 'Wallboard Mode'}
-            </button>
-          </div>
-        </div>
-      </header>
+          </header>
 
       {/* Main Content */}
       <main className="max-w-[1920px] mx-auto p-6">
@@ -123,10 +143,31 @@ export default function Dashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
+<<<<<<< HEAD
           {/* Metrics Header */}
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-white mb-2">Metrics</h2>
             <p className="text-sm text-gray-400">Real-time key performance indicators</p>
+=======
+          {/* User Info Bar */}
+          <div className="mb-6 flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold text-white mb-2">Metrics</h2>
+              <p className="text-sm text-gray-400">Real-time key performance indicators</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="text-right">
+                <p className="text-sm text-gray-400">Signed in as</p>
+                <p className="text-sm font-medium text-white">{user?.signInDetails?.loginId || 'User'}</p>
+              </div>
+              <button
+                onClick={signOut}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm rounded-lg transition-colors"
+              >
+                Sign Out
+              </button>
+            </div>
+>>>>>>> 1e61032509e93dc8238e4fb3b3f0f0e8108322b1
           </div>
 
           {/* KPI Cards */}
@@ -154,6 +195,8 @@ export default function Dashboard() {
           </section>
         </motion.div>
       </main>
-    </div>
+        </div>
+      )}
+    </Authenticator>
   )
 }
