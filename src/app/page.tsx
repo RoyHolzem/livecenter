@@ -21,7 +21,7 @@ import Charts from '../components/dashboard/Charts'
 import QueueStatus from '../components/dashboard/QueueStatus'
 import '../lib/amplify-config'
 
-function Dashboard() {
+export default function Dashboard() {
   const [agents, setAgents] = useState<Agent[]>([])
   const [queues, setQueues] = useState<Queue[]>([])
   const [kpis, setKpis] = useState<KPIMetrics | null>(null)
@@ -107,7 +107,7 @@ function Dashboard() {
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-3 text-sm">
                   <div className="text-gray-400">
-                    {user?.attributes?.email || 'User'}
+                    {user?.signInDetails?.loginId || 'User'}
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
@@ -143,12 +143,7 @@ function Dashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-<<<<<<< HEAD
-          {/* Metrics Header */}
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-white mb-2">Metrics</h2>
-            <p className="text-sm text-gray-400">Real-time key performance indicators</p>
-=======
+
           {/* User Info Bar */}
           <div className="mb-6 flex items-center justify-between">
             <div>
@@ -167,7 +162,6 @@ function Dashboard() {
                 Sign Out
               </button>
             </div>
->>>>>>> 1e61032509e93dc8238e4fb3b3f0f0e8108322b1
           </div>
 
           {/* KPI Cards */}
